@@ -2,8 +2,10 @@
 
 var mapBlock = document.querySelector('.map');
 mapBlock.classList.remove('.map--faded');
-var mapPinsBlock = document.querySelector('.map__pins');
+var mapPinsBlock = mapBlock.querySelector('.map__pins');
 var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
+var advertTemplate = document.querySelector('template').content.querySelector('.map__card');
+var filters = mapBlock.querySelector('.map__filters-container');
 
 var advertsCount = 8;
 var titles = [
@@ -18,11 +20,6 @@ var titles = [
 var types = ['flat', 'house', 'bungalo'];
 var times = ['12:00', '13:00', '14:00'];
 var featuresFullList = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-
-var avatarCount = [];
-for (var i = 0; i < advertsCount; i++) {
-  avatarCount[i] = i + 1;
-}
 
 function getRandomNumber(min, max) {
   return Math.round(Math.random() * (max - min) + min);
@@ -54,7 +51,7 @@ function getBookingData() {
     var item = {};
     item.author = {
       avatar: 'img/avatars/user0' + (i + 1) + '.png',
-    },
+    };
     item.offer = {
       title: getUnique(titles, i),
       address: x + ',' + y,
@@ -67,7 +64,7 @@ function getBookingData() {
       features: getRandomArr(featuresFullList),
       description: '',
       photos: [],
-    },
+    };
     item.location = {
       coordX: x,
       coordY: y,
@@ -87,13 +84,41 @@ function renderPin(data) {
   return mapPin;
 }
 
-var fragment = document.createDocumentFragment();
-for (i = 0; i < adverts.length; i++) {
-  fragment.appendChild(renderPin(adverts[i]));
+function putPinsOnMap() {
+  var fragment = document.createDocumentFragment();
+  for (var i = 0; i < adverts.length; i++) {
+    fragment.appendChild(renderPin(adverts[i]));
+  }
+  mapPinsBlock.appendChild(fragment);
 }
-mapPinsBlock.appendChild(fragment);
 
-var advertTemplate = document.querySelector('template').content.querySelector('.map__card');
+function translateOfferType(type) {
+  var result = null;
+  switch (type) {
+    case 'flat' :
+      result = 'Квартира';
+      break;
+    case 'bungalo' :
+      result = 'Бунгало';
+      break;
+    case 'house' :
+      result = 'Дом';
+      break;
+    default :
+      break;
+  }
+  return result;
+}
+
+function getOfferFeatures(data) {
+  var featureList = document.createDocumentFragment();
+  data.forEach(function (item) {
+    var featureItem = document.createElement('li');
+    featureItem.className = 'feature feature--' + item;
+    featureList.appendChild(featureItem);
+  });
+  return featureList;
+}
 
 function createAdvert(data) {
   var newAdvert = advertTemplate.cloneNode(true);
@@ -101,24 +126,18 @@ function createAdvert(data) {
   newAdvert.querySelector('h3').textContent = data.offer.title;
   newAdvert.querySelector('small').textContent = data.offer.address;
   newAdvert.querySelector('.popup__price').textContent = data.offer.price + '&#x20bd;/ночь';
-  var offerType = newAdvert.querySelector('h4').textContent;
-    if (data.offer.type === 'flat') offerType = 'Квартира';
-    if (data.offer.type === 'bungalo') offerType = 'Бунгало';
-    if (data.offer.type === 'house') offerType = 'Дом';
+  newAdvert.querySelector('h4').textContent = translateOfferType(data.offer.type);
   newAdvert.children[6].textContent = data.offer.rooms + ' комнаты для ' + data.offer.guests + ' гостей';
-  newAdvert.children[7].textContent = 'Заезд после ' + data.offer.checkin + ', выезд до' + data.offer.checkout;
+  newAdvert.children[7].textContent = 'Заезд после ' + data.offer.checkin + ', выезд до ' + data.offer.checkout;
 
-/* var featuresElement = newAdvert.querySelector('.popup__features').querySelector('li');
-for (var i = 0; i < data.offer.features.length; i++) {
-featuresElement[i].classList.add('feature feature--' + data.offer.features[i]);
-};
-var featuresList = newAdvert.querySelector('.popup__features');
-console.log(featuresList);*/
+  var featureList = newAdvert.querySelector('.popup__features');
+  featureList.innerHTML = '';
+  featureList.appendChild(getOfferFeatures(data.offer.features));
+
 
   newAdvert.children[9].textContent = data.offer.description;
   return newAdvert;
-};
+}
 
-// var fragmentAdvert = document.createDocumentFragment();
-// fragmentAdvert.appendChild(createAdvert(adverts[0]));
-mapPinsBlock.insertAdjacentHTML('afterend', createAdvert(adverts[0]));
+putPinsOnMap();
+filters.insertAdjacentElement('beforeBegin', createAdvert(adverts[0]));
