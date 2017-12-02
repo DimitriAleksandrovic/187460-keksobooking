@@ -1,7 +1,7 @@
 'use strict';
 
 var ESC_KEYCODE = 27;
-var ENTER_KEYCODE = 13;
+// var ENTER_KEYCODE = 13;
 
 var mapBlock = document.querySelector('.map');
 var mapPinsBlock = mapBlock.querySelector('.map__pins');
@@ -33,23 +33,23 @@ var featuresFullList = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', '
 function getBookingData() {
   var arr = [];
   for (var i = 0; i < advertsCount; i++) {
-    var x = getRandomNumber(300, 900);
-    var y = getRandomNumber(100, 500);
-    var time = times[getRandomNumber(0, times.length - 1)];
+    var x = window.getRandomNumber(300, 900);
+    var y = window.getRandomNumber(100, 500);
+    var time = times[window.getRandomNumber(0, times.length - 1)];
     var item = {};
     item.author = {
       avatar: 'img/avatars/user0' + (i + 1) + '.png',
     };
     item.offer = {
-      title: getUnique(titles, i),
+      title: window.getUnique(titles, i),
       address: x + ',' + y,
-      price: getRandomNumber(1000, 1000000),
-      type: types[getRandomNumber(0, types.length - 1)],
-      rooms: getRandomNumber(1, 5),
-      guests: getRandomNumber(1, 5),
+      price: window.getRandomNumber(1000, 1000000),
+      type: types[window.getRandomNumber(0, types.length - 1)],
+      rooms: window.getRandomNumber(1, 5),
+      guests: window.getRandomNumber(1, 5),
       checkin: time,
       checkout: time,
-      features: getRandomArr(featuresFullList),
+      features: window.getRandomArr(featuresFullList),
       description: '',
       photos: [],
     };
@@ -166,7 +166,7 @@ pinMain.addEventListener('mouseup', function (event) {
   createPins(adverts);
 });
 
-mapBlock.addEventListener('click', clickHandler(showDetails, adverts));
+mapBlock.addEventListener('click', window.clickHandler(showDetails, adverts));
 
 mapBlock.addEventListener('click', function (event) {
   event.preventDefault();
@@ -175,5 +175,5 @@ mapBlock.addEventListener('click', function (event) {
   }
 });
 
-document.addEventListener('keydown', keyDownHandler(closePopUp, ESC_KEYCODE));
+document.addEventListener('keydown', window.keyDownHandler(closePopUp, ESC_KEYCODE));
 
