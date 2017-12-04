@@ -177,78 +177,103 @@ mapBlock.addEventListener('click', function (event) {
 
 document.addEventListener('keydown', window.keyDownHandler(closePopUp, ESC_KEYCODE));
 
-/// 
-var timein = noticeForm.querySelector('#timein');
-var timeout = noticeForm.querySelector('#timeout');
-timein.addEventListener('input', function () {
-  for (var j = 0; j < timein.options.length; j++) {
-    if (timein.selectedIndex === j) {
-      timeout.selectedIndex = j;
-    }
+
+// ............
+function synchronizeFields(eventName, field1, field2, callback) {
+  callback(field1, field2);
+  field1.addEventListener(eventName, function () {
+    callback(field1, field2);
+  });
+}
+
+function timeSinc(param1, param2) {
+  param2.selectedIndex = param1.selectedIndex;
+}
+
+function roomsSincGuest(param1, param2) {
+  var optionsMapping = {
+    1: [1],
+    2: [1, 2],
+    3: [1, 2, 3],
+    100: [0]
   };
-});
+  var value = parseInt(param1.value, 10);
+  var options = param2.options;
+  var optionsLength = options.length;
+  var availableOptions = optionsMapping[value];
+  var curValue = null;
 
-var roomsNumber = noticeForm.querySelector('#room_number');
-var guestsNumber = noticeForm.querySelector('#capacity');
-guestsNumber.selectedIndex = 2;
-guestsNumber.options[0].disabled = true;
-guestsNumber.options[1].disabled = true;
-guestsNumber.options[3].disabled = true;
-roomsNumber.addEventListener('input', function () {
-  if (roomsNumber.selectedIndex === 1) {
-    guestsNumber.selectedIndex = 1;
-    guestsNumber.options[0].disabled = true;
-    guestsNumber.options[1].disabled = false;
-    guestsNumber.options[3].disabled = true;
+  for (var i = 0; i < optionsLength; i++) {
+    curValue = parseInt(options[i].value, 10);
+    if (availableOptions.indexOf(curValue) !== -1) {
+      options[i].disabled = false;
+      if (curValue === value || availableOptions.length === 1) {
+        options[i].selected = true;
+      }
+    } else {
+      options[i].disabled = true;
+    }
   }
-  else if (roomsNumber.selectedIndex === 2) {
-    guestsNumber.selectedIndex = 0;
-    guestsNumber.options[0].disabled = false;
-    guestsNumber.options[3].disabled = true;
-  }
-  else if (roomsNumber.selectedIndex === 3) {
-    guestsNumber.selectedIndex = 3;
-    guestsNumber.options[0].disabled = true;
-    guestsNumber.options[1].disabled = true;
-    guestsNumber.options[2].disabled = true;
-  }
-  else if (roomsNumber.selectedIndex === 0) {
-    guestsNumber.selectedIndex = 2;
-    guestsNumber.options[0].disabled = true;
-    guestsNumber.options[1].disabled = true;
-    guestsNumber.options[3].disabled = true;
-  }
-}); 
+}
 
-/* var homeType = noticeForm.querySelector('#type');
-var priceWanted = noticeForm.querySelector('#price');
-priceWanted.min = '1000';
-homeType.addEventListener('input', function () {
-  
-  if (homeType.selectedIndex === 0) {
-    priceWanted.min = '1000';
+function getRoomsPrice(field1, field2) {
+  var value = null;
+  switch (field1.value) {
+    case 'flat':
+      value = 1000;
+      break;
+    case 'bungalo':
+      value = 0;
+      break;
+    case 'house':
+      value = 5000;
+      break;
+    case 'palace':
+      value = 10000;
+      break;
   }
-  else if (homeType.selectedIndex === 1) {
-    priceWanted.min = '0';
-  }
-  else if (homeType.selectedIndex === 2) {
-    priceWanted.min = '5000';
-  }
-  else if (homeType.selectedIndex === 3) {
-    priceWanted.min = '10000';
-  }
-});*/
+  field2.value = value;
+}
 
-// console.log(priceWanted.placeholder);
-
-/* var formSubmit = noticeForm.querySelector('.form__submit');
-formSubmit.addEventListener('click', function (event) {
-  event.preventDefault();
-  for (var i = 0; i < formElements.length; i++) {
-    if (formElements.validity.valid[i] == false) {
-      formElements.style.border-color = 'red';
-    };
+function limitPrice(field1, field2) {
+  var value = field2.value;
+  if (value === 'flat' && field1.value < 1000) {
+    field1.value = 1000;
   }
-}) */
+  if (value === 'bungalo' && field1.value < 0) {
+    field1.value = 0;
+  }
+  if (value === 'house' && field1.value < 5000) {
+    field1.value = 5000;
+  }
+  if (value === 'palace' && field1.value < 10000) {
+    field1.value = 10000;
+  }
+}
+// ............
+
+synchronizeFields('change', noticeForm.timein, noticeForm.timeout, timeSinc);
+synchronizeFields('change', noticeForm.timeout, noticeForm.timein, timeSinc);
+
+synchronizeFields('change', noticeForm.type, noticeForm.price, getRoomsPrice);
+synchronizeFields('input', noticeForm.price, noticeForm.type, limitPrice);
+
+synchronizeFields('change', noticeForm.rooms, noticeForm.capacity, roomsSincGuest);
 
 // ?массив formElements пустой
+
+noticeForm.addEventListener('submit', function (event) {
+  event.preventDefault();
+  var checked = true;
+  if (noticeForm.title.value.length < 30 || noticeForm.title.value.length > 100) {
+    checked = false;
+    noticeForm.title.style.border = '2px solid red';
+    noticeForm.title.addEventListener('focus', function (evt) {
+      evt.preventDefault();
+      noticeForm.title.style.border = '';
+    });
+  }
+  if (checked) {
+    noticeForm.submit();
+  }
+}, true);
