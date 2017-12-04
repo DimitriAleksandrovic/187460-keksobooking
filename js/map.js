@@ -177,3 +177,78 @@ mapBlock.addEventListener('click', function (event) {
 
 document.addEventListener('keydown', window.keyDownHandler(closePopUp, ESC_KEYCODE));
 
+/// 
+var timein = noticeForm.querySelector('#timein');
+var timeout = noticeForm.querySelector('#timeout');
+timein.addEventListener('input', function () {
+  for (var j = 0; j < timein.options.length; j++) {
+    if (timein.selectedIndex === j) {
+      timeout.selectedIndex = j;
+    }
+  };
+});
+
+var roomsNumber = noticeForm.querySelector('#room_number');
+var guestsNumber = noticeForm.querySelector('#capacity');
+guestsNumber.selectedIndex = 2;
+guestsNumber.options[0].disabled = true;
+guestsNumber.options[1].disabled = true;
+guestsNumber.options[3].disabled = true;
+roomsNumber.addEventListener('input', function () {
+  if (roomsNumber.selectedIndex === 1) {
+    guestsNumber.selectedIndex = 1;
+    guestsNumber.options[0].disabled = true;
+    guestsNumber.options[1].disabled = false;
+    guestsNumber.options[3].disabled = true;
+  }
+  else if (roomsNumber.selectedIndex === 2) {
+    guestsNumber.selectedIndex = 0;
+    guestsNumber.options[0].disabled = false;
+    guestsNumber.options[3].disabled = true;
+  }
+  else if (roomsNumber.selectedIndex === 3) {
+    guestsNumber.selectedIndex = 3;
+    guestsNumber.options[0].disabled = true;
+    guestsNumber.options[1].disabled = true;
+    guestsNumber.options[2].disabled = true;
+  }
+  else if (roomsNumber.selectedIndex === 0) {
+    guestsNumber.selectedIndex = 2;
+    guestsNumber.options[0].disabled = true;
+    guestsNumber.options[1].disabled = true;
+    guestsNumber.options[3].disabled = true;
+  }
+}); 
+
+/* var homeType = noticeForm.querySelector('#type');
+var priceWanted = noticeForm.querySelector('#price');
+priceWanted.min = '1000';
+homeType.addEventListener('input', function () {
+  
+  if (homeType.selectedIndex === 0) {
+    priceWanted.min = '1000';
+  }
+  else if (homeType.selectedIndex === 1) {
+    priceWanted.min = '0';
+  }
+  else if (homeType.selectedIndex === 2) {
+    priceWanted.min = '5000';
+  }
+  else if (homeType.selectedIndex === 3) {
+    priceWanted.min = '10000';
+  }
+});*/
+
+// console.log(priceWanted.placeholder);
+
+/* var formSubmit = noticeForm.querySelector('.form__submit');
+formSubmit.addEventListener('click', function (event) {
+  event.preventDefault();
+  for (var i = 0; i < formElements.length; i++) {
+    if (formElements.validity.valid[i] == false) {
+      formElements.style.border-color = 'red';
+    };
+  }
+}) */
+
+// ?массив formElements пустой
