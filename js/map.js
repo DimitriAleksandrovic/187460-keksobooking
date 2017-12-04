@@ -177,8 +177,6 @@ mapBlock.addEventListener('click', function (event) {
 
 document.addEventListener('keydown', window.keyDownHandler(closePopUp, ESC_KEYCODE));
 
-
-// ............
 function synchronizeFields(eventName, field1, field2, callback) {
   callback(field1, field2);
   field1.addEventListener(eventName, function () {
@@ -250,7 +248,6 @@ function limitPrice(field1, field2) {
     field1.value = 10000;
   }
 }
-// ............
 
 synchronizeFields('change', noticeForm.timein, noticeForm.timeout, timeSinc);
 synchronizeFields('change', noticeForm.timeout, noticeForm.timein, timeSinc);
