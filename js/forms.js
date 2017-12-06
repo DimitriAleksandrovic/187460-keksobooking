@@ -2,6 +2,8 @@
 
 (function () {
 
+  window.map.noticeForm.address.value = 'найти координаты!!';
+
   function synchronizeFields(eventName, field1, field2, callback) {
     callback(field1, field2);
     field1.addEventListener(eventName, function () {
