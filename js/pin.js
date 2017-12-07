@@ -20,12 +20,12 @@
 
   window.map.dragPinMain();
 
-  function FF(event) {
+  function putPinsOnMap() {
     window.map.activatePage();
     createPins(window.data.getBookingData());
-    document.removeEventListener('mouseup', FF); 
+    document.removeEventListener('mouseup', putPinsOnMap);
   }
-  
-  document.addEventListener('mouseup', FF);
-  
+
+  document.addEventListener('mouseup', putPinsOnMap);
+
 })();

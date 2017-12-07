@@ -103,12 +103,11 @@ var ESC_KEYCODE = 27;
         }
 
         var finalCoords = {
-        fx: Math.round(pinMain.offsetLeft + pinMain.offsetWidth / 2),
-        fy: pinMain.offsetTop + pinMain.offsetHeight
-      };
+          fx: Math.round(pinMain.offsetLeft + pinMain.offsetWidth / 2),
+          fy: pinMain.offsetTop + pinMain.offsetHeight
+        };
 
-      noticeForm.address.value = 'x: ' + finalCoords.fx + ', y: ' + finalCoords.fy;
-
+        noticeForm.address.value = 'x: ' + finalCoords.fx + ', y: ' + finalCoords.fy;
       }
 
       function onMouseUp(upEvt) {
@@ -119,8 +118,6 @@ var ESC_KEYCODE = 27;
 
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
-
-
 
     });
   }
