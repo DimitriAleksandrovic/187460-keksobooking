@@ -20,19 +20,12 @@
 
   window.map.dragPinMain();
 
-  document.addEventListener('mouseup', function () {
+  function FF(event) {
     window.map.activatePage();
     createPins(window.data.getBookingData());
-
-    // вот координаты!
-    var finalCoords = {
-      fx: window.map.pinMain.offsetLeft + 33,
-      fy: window.map.pinMain.offsetTop + 65 + 22
-    };
-    console.log(finalCoords);
-    return finalCoords; // ???
-  });
-
-  // console.log(finalCoords);
-
+    document.removeEventListener('mouseup', FF); 
+  }
+  
+  document.addEventListener('mouseup', FF);
+  
 })();

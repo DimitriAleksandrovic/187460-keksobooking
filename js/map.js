@@ -82,12 +82,33 @@ var ESC_KEYCODE = 27;
         pinMain.style.left = (pinMain.offsetLeft - shift.x) + 'px';
         pinMain.style.top = (pinMain.offsetTop - shift.y) + 'px';
 
-        if ((pinMain.offsetTop - shift.y) < 100) {
-          pinMain.style.top = 100 + 'px';
+        var limitCoords = {
+          left: Math.round(pinMain.offsetWidth / 2),
+          top: 180 - pinMain.offsetHeight,
+          right: Math.round(pinMain.offsetParent.offsetWidth - pinMain.offsetWidth / 2),
+          bottom: pinMain.offsetParent.offsetHeight - pinMain.offsetHeight
+        };
+
+        if ((pinMain.offsetTop - shift.y) < limitCoords.top) {
+          pinMain.style.top = limitCoords.top + 'px';
         }
-        if ((pinMain.offsetTop - shift.y) > 500) {
-          pinMain.style.top = 500 + 'px';
+        if ((pinMain.offsetTop - shift.y) > limitCoords.bottom) {
+          pinMain.style.top = limitCoords.bottom + 'px';
         }
+        if ((pinMain.offsetLeft - shift.x) < limitCoords.left) {
+          pinMain.style.left = limitCoords.left + 'px';
+        }
+        if ((pinMain.offsetLeft - shift.x) > limitCoords.right) {
+          pinMain.style.left = limitCoords.right + 'px';
+        }
+
+        var finalCoords = {
+        fx: Math.round(pinMain.offsetLeft + pinMain.offsetWidth / 2),
+        fy: pinMain.offsetTop + pinMain.offsetHeight
+      };
+
+      noticeForm.address.value = 'x: ' + finalCoords.fx + ', y: ' + finalCoords.fy;
+
       }
 
       function onMouseUp(upEvt) {
@@ -98,6 +119,8 @@ var ESC_KEYCODE = 27;
 
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
+
+
 
     });
   }
