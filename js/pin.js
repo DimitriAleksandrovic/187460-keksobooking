@@ -18,10 +18,14 @@
     window.map.mapPinsBlock.appendChild(fragment);
   }
 
-  window.map.pinMain.addEventListener('mouseup', function (event) {
-    event.preventDefault();
+  window.map.dragPinMain();
+
+  function putPinsOnMap() {
     window.map.activatePage();
     createPins(window.data.getBookingData());
-  });
+    document.removeEventListener('mouseup', putPinsOnMap);
+  }
+
+  document.addEventListener('mouseup', putPinsOnMap);
 
 })();
