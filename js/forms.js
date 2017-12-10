@@ -2,13 +2,6 @@
 
 (function () {
 
-  function synchronizeFields(eventName, field1, field2, callback) {
-    callback(field1, field2);
-    field1.addEventListener(eventName, function () {
-      callback(field1, field2);
-    });
-  }
-
   function timeSinc(param1, param2) {
     param2.selectedIndex = param1.selectedIndex;
   }
@@ -74,13 +67,13 @@
     }
   }
 
-  synchronizeFields('change', window.map.noticeForm.timein, window.map.noticeForm.timeout, timeSinc);
-  synchronizeFields('change', window.map.noticeForm.timeout, window.map.noticeForm.timein, timeSinc);
+  window.synchronizeFields('change', window.map.noticeForm.timein, window.map.noticeForm.timeout, timeSinc);
+  window.synchronizeFields('change', window.map.noticeForm.timeout, window.map.noticeForm.timein, timeSinc);
 
-  synchronizeFields('change', window.map.noticeForm.type, window.map.noticeForm.price, getRoomsPrice);
-  synchronizeFields('input', window.map.noticeForm.price, window.map.noticeForm.type, limitPrice);
+  window.synchronizeFields('change', window.map.noticeForm.type, window.map.noticeForm.price, getRoomsPrice);
+  window.synchronizeFields('input', window.map.noticeForm.price, window.map.noticeForm.type, limitPrice);
 
-  synchronizeFields('change', window.map.noticeForm.rooms, window.map.noticeForm.capacity, roomsSincGuest);
+  window.synchronizeFields('change', window.map.noticeForm.rooms, window.map.noticeForm.capacity, roomsSincGuest);
 
   window.map.noticeForm.addEventListener('submit', function (event) {
     event.preventDefault();
