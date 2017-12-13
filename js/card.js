@@ -12,22 +12,22 @@
       featureList.appendChild(featureItem);
     });
     return featureList;
-  }
+  };
 
   var translateOfferType = function (type) {
-  var result = null;
-  switch (type) {
-    case 'flat':
-      result = 'Квартира';
-      break;
-    case 'bungalo':
-      result = 'Бунгало';
-      break;
-    case 'house':
-      result = 'Дом';
-      break;
-    default:
-      break;
+    var result = null;
+    switch (type) {
+      case 'flat':
+        result = 'Квартира';
+        break;
+      case 'bungalo':
+        result = 'Бунгало';
+        break;
+      case 'house':
+        result = 'Дом';
+        break;
+      default:
+        break;
     }
     return result;
   };

@@ -79,10 +79,10 @@ window.ajax = function (settings) {
       }
     }
   };
-  
+
   xhr.onerror = function () {
     if (typeof options.sendError === 'function') {
-      options.sendError('Произошла ошибка соединения!');
+      options.sendError('Что-то пошло не так');
     }
   };
 

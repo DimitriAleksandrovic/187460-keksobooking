@@ -2,9 +2,12 @@
 
 (function () {
 
+  var noticeForm = document.querySelector('.notice__form');
+  var formSubmitBlock = noticeForm.querySelector('.form__element--submit');
+
   var timeSinc = function (param1, param2) {
     param2.selectedIndex = param1.selectedIndex;
-  }
+  };
 
   var roomsSincGuest = function (param1, param2) {
     var optionsMapping = {
@@ -30,7 +33,7 @@
         options[i].disabled = true;
       }
     }
-  }
+  };
 
   var getRoomsPrice = function (field1, field2) {
     var value = null;
@@ -49,7 +52,7 @@
         break;
     }
     field2.value = value;
-  }
+  };
 
   var limitPrice = function (field1, field2) {
     var value = field2.value;
@@ -65,29 +68,46 @@
     if (value === 'palace' && field1.value < 10000) {
       field1.value = 10000;
     }
-  }
+  };
 
-  window.synchronizeFields('change', window.map.noticeForm.timein, window.map.noticeForm.timeout, timeSinc);
-  window.synchronizeFields('change', window.map.noticeForm.timeout, window.map.noticeForm.timein, timeSinc);
+  window.synchronizeFields('change', noticeForm.timein, noticeForm.timeout, timeSinc);
+  window.synchronizeFields('change', noticeForm.timeout, noticeForm.timein, timeSinc);
 
-  window.synchronizeFields('change', window.map.noticeForm.type, window.map.noticeForm.price, getRoomsPrice);
-  window.synchronizeFields('input', window.map.noticeForm.price, window.map.noticeForm.type, limitPrice);
+  window.synchronizeFields('change', noticeForm.type, noticeForm.price, getRoomsPrice);
+  window.synchronizeFields('input', noticeForm.price, noticeForm.type, limitPrice);
 
-  window.synchronizeFields('change', window.map.noticeForm.rooms, window.map.noticeForm.capacity, roomsSincGuest);
+  window.synchronizeFields('change', noticeForm.rooms, noticeForm.capacity, roomsSincGuest);
 
-  window.map.noticeForm.addEventListener('submit', function (event) {
+  noticeForm.addEventListener('submit', function (event) {
     event.preventDefault();
+
+    var onLoad = function () {
+      var message = document.createElement('div');
+      message.style = 'z-index: 100; margin: 0 auto; margin-top: 20px; text-align: center; color: green;';
+      message.style.position = 'absolute';
+      message.style.left = 0;
+      message.style.right = 0;
+      message.style.fontSize = '18px';
+      message.textContent = 'Объявление успешно загружено';
+      formSubmitBlock.insertAdjacentElement('beforeEnd', message);
+    };
+
+    /* var rewriteTitle = function (txt) {
+
+    };*/
+
     var checked = true;
-    if (window.map.noticeForm.title.value.length < 30 || window.map.noticeForm.title.value.length > 100) {
+    if (noticeForm.title.value.length < 30 || noticeForm.title.value.length > 100) {
       checked = false;
-      window.map.noticeForm.title.style.border = '2px solid red';
-      window.map.noticeForm.title.addEventListener('focus', function (evt) {
+      noticeForm.title.style.border = '2px solid red';
+      noticeForm.title.addEventListener('focus', function (evt) {
         evt.preventDefault();
-        window.map.noticeForm.title.style.border = '';
+        noticeForm.title.style.border = '';
       });
     }
     if (checked) {
-      window.map.noticeForm.submit();
+      window.backend.save(onLoad, null, new FormData(noticeForm));
+      event.preventDefault();
     }
   }, true);
 

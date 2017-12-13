@@ -24,7 +24,7 @@ var ESC_KEYCODE = 27;
       activePin = target;
       currentAdvert = advert;
     }
-  }
+  };
 
   var closePopUp = function (event) {
     event.preventDefault();
@@ -32,7 +32,7 @@ var ESC_KEYCODE = 27;
       currentAdvert.remove();
       activePin.classList.remove('map__pin--active');
     }
-  }
+  };
 
   document.addEventListener('loadData', function (event) {
     event.preventDefault();

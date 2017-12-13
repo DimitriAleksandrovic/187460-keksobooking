@@ -9,15 +9,13 @@
 
   var formElements = Array.from(noticeForm.querySelector('fieldset'));
 
-
-  
   var activatePage = function () {
     noticeForm.classList.remove('notice__form--disabled');
     window.showcard.mapBlock.classList.remove('map--faded');
     formElements.forEach(function (item) {
       item.disabled = false;
     });
-  }
+  };
 
   var dragPinMain = function () {
     pinMain.addEventListener('mousedown', function (event) {
@@ -67,30 +65,28 @@
         };
 
         noticeForm.address.value = 'x: ' + finalCoords.fx + ', y: ' + finalCoords.fy;
-      }
+      };
 
       var onMouseUp = function (upEvt) {
         upEvt.preventDefault();
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
-      }
+      };
 
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
 
     });
-  }
+  };
 
-  pinMain.parentElement.style.position = 'relative';
-  pinMain.style.position = 'absolute';
-  pinMain.style = 'z-index: 50;';
+  //  pinMain.parentElement.style.position = 'relative';
+  //  pinMain.style.position = 'absolute';
+  //  pinMain.style = 'z-index: 50;';
 
   window.map = {
     activatePage: activatePage,
-    mapPinsBlock: mapPinsBlock,
     pinTemplate: pinTemplate,
     noticeForm: noticeForm,
-    pinMain: pinMain,
     dragPinMain: dragPinMain
   };
 

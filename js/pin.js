@@ -12,14 +12,14 @@
     mapPin.children[0].src = data.author.avatar;
     mapPin.dataset.num = num;
     return mapPin;
-  }
+  };
   var createPins = function (data) {
     var fragment = document.createDocumentFragment();
     for (var i = 0; i < data.length; i++) {
       fragment.appendChild(renderPin(data[i], i));
     }
-    window.map.mapPinsBlock.appendChild(fragment);
-  }
+    mapPinsBlock.appendChild(fragment);
+  };
 
   window.map.dragPinMain();
 
@@ -27,7 +27,7 @@
     window.map.activatePage();
     createPins(window.data.get());
     pinMain.removeEventListener('mouseup', putPinsOnMap);
-  }
+  };
 
   pinMain.addEventListener('mouseup', putPinsOnMap);
 
