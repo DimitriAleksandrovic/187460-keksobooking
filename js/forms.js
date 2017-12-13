@@ -2,11 +2,11 @@
 
 (function () {
 
-  function timeSinc(param1, param2) {
+  var timeSinc = function (param1, param2) {
     param2.selectedIndex = param1.selectedIndex;
   }
 
-  function roomsSincGuest(param1, param2) {
+  var roomsSincGuest = function (param1, param2) {
     var optionsMapping = {
       1: [1],
       2: [1, 2],
@@ -32,7 +32,7 @@
     }
   }
 
-  function getRoomsPrice(field1, field2) {
+  var getRoomsPrice = function (field1, field2) {
     var value = null;
     switch (field1.value) {
       case 'flat':
@@ -51,7 +51,7 @@
     field2.value = value;
   }
 
-  function limitPrice(field1, field2) {
+  var limitPrice = function (field1, field2) {
     var value = field2.value;
     if (value === 'flat' && field1.value < 1000) {
       field1.value = 1000;

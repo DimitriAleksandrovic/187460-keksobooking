@@ -9,7 +9,7 @@ var ESC_KEYCODE = 27;
   var activePin = null;
   var currentAdvert = null;
 
-  function showCard(event, data) {
+  var showCard = function (event, data) {
     event.preventDefault();
     var target = event.target.closest('.map__pin');
     if (target && !target.classList.contains('map__pin--main')) {
@@ -26,7 +26,7 @@ var ESC_KEYCODE = 27;
     }
   }
 
-  function closePopUp(event) {
+  var closePopUp = function (event) {
     event.preventDefault();
     if (currentAdvert) {
       currentAdvert.remove();
@@ -34,7 +34,11 @@ var ESC_KEYCODE = 27;
     }
   }
 
-  mapBlock.addEventListener('click', window.clickHandler(showCard, window.data.getBookingData()));
+  document.addEventListener('loadData', function (event) {
+    event.preventDefault();
+    mapBlock.addEventListener('click', window.clickHandler(showCard, window.data.get()));
+  });
+
 
   mapBlock.addEventListener('click', function (event) {
     event.preventDefault();
