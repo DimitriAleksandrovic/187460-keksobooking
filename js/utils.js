@@ -88,3 +88,5 @@ window.ajax = function (settings) {
 
   xhr.send(options.data);
 };
+
+

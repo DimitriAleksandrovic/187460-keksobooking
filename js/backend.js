@@ -5,7 +5,7 @@
   function load(onLoad, onError) {
     var settings = {
       method: 'GET', // метод запроса
-      url: 'https://1', // адрес запроса
+      url: 'https://1510.dump.academy/keksobooking/data', // адрес запроса
       success: onLoad, // колбэк, выполняется в случае успешно выполненого запроса
       sendError: onError, // функция обработки ошибок
       type: 'json', // тип получаемых данных
