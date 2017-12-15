@@ -124,7 +124,7 @@
     }
     errorBox.innerHTML = '';
     
-    if (typeof message !== 'string') {
+    if (Object.prototype.toString.call(message) === '[object Array]') {
       errorBox.appendChild(renderErrorText());
     } else {
       errorBox.textContent += message;

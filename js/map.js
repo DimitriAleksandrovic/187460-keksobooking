@@ -82,7 +82,7 @@
 
   //  pinMain.parentElement.style.position = 'relative';
   //  pinMain.style.position = 'absolute';
-  //  pinMain.style = 'z-index: 50;';
+  pinMain.style = 'z-index: 50;';
 
   window.map = {
     activatePage: activatePage,

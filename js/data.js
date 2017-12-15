@@ -7,6 +7,8 @@
   var offerData = null;
   var loadData = new Event('loadData', {bubbles: true, cancelable: true});
 
+  mapBlock.style.overflow = 'visible';
+
   var onLoad = function (data) {
     offerData = data;
     document.dispatchEvent(loadData);
