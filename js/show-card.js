@@ -39,7 +39,6 @@ var ESC_KEYCODE = 27;
     mapBlock.addEventListener('click', window.clickHandler(showCard, window.data.get()));
   });
 
-
   mapBlock.addEventListener('click', function (event) {
     event.preventDefault();
     if (event.target.closest('.popup__close')) {

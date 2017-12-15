@@ -25,9 +25,12 @@
 
   window.backend.load(onLoad, onError);
 
-  window.data = {};
+  window.data = {
+    onLoad: onload,
+    onError: onError
+  };
   window.data.get = function () {
     return offerData;
   };
-
+  
 })();

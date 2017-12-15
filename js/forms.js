@@ -78,37 +78,82 @@
 
   window.synchronizeFields('change', noticeForm.rooms, noticeForm.capacity, roomsSincGuest);
 
+  var loadDataHandler = function () {
+    var message = document.createElement('div');
+    message.style = 'z-index: 100; margin: 0 auto; margin-top: 20px; text-align: center; color: green;';
+    message.style.position = 'absolute';
+    message.style.left = 0;
+    message.style.right = 0;
+    message.style.fontSize = '18px';
+    message.textContent = 'Объявление успешно загружено';
+    formSubmitBlock.insertAdjacentElement('beforeEnd', message);
+    setTimeout(function () {
+      message.style.display = 'none';
+    }, 5000);
+  };
+
+
+  var loadDataError = function (message) {
+    var renderErrorText = function () {
+      var fragment = document.createDocumentFragment();
+      message.forEach(function (item) {
+        var row = document.createElement('p');
+        row.textContent = 'Поле ' + item.fieldName + ': ' + item.errorMessage;
+        fragment.appendChild(row);
+      });
+      return fragment;
+    };
+    var errorBox = document.querySelector('.error-save');
+    if (!errorBox) {
+      errorBox = document.createElement('div');
+      errorBox.classList.add('error-save');
+      errorBox.style.position = 'fixed';
+      errorBox.style.left = 50 + '%';
+      errorBox.style.top = 50 + '%';
+      errorBox.style.transform = 'translate(-50%, -50%)';
+      errorBox.style.zIndex = 9999;
+      errorBox.style.fontSize = '21px';
+      errorBox.style.display = 'hidden';
+      errorBox.style.color = 'red';
+      errorBox.style.border = '2px solid red';
+      errorBox.style.borderRadius = '8px';
+      errorBox.style.backgroundColor = 'white';
+      errorBox.style.boxShadow = '2px 2px 3px black';
+      errorBox.style.padding = '10px 20px';
+      noticeForm.appendChild(errorBox);
+    }
+    errorBox.innerHTML = '';
+    
+    if (typeof message !== 'string') {
+      errorBox.appendChild(renderErrorText());
+    } else {
+      errorBox.textContent += message;
+    }
+
+    errorBox.style.display = 'block';
+    setTimeout(function () {
+      errorBox.style.display = 'none';
+    }, 5000);
+  };
+
   noticeForm.addEventListener('submit', function (event) {
     event.preventDefault();
-
-    var onLoad = function () {
-      var message = document.createElement('div');
-      message.style = 'z-index: 100; margin: 0 auto; margin-top: 20px; text-align: center; color: green;';
-      message.style.position = 'absolute';
-      message.style.left = 0;
-      message.style.right = 0;
-      message.style.fontSize = '18px';
-      message.textContent = 'Объявление успешно загружено';
-      formSubmitBlock.insertAdjacentElement('beforeEnd', message);
-    };
-
-    /* var rewriteTitle = function (txt) {
-
-    };*/
-
     var checked = true;
     if (noticeForm.title.value.length < 30 || noticeForm.title.value.length > 100) {
       checked = false;
+      loadDataError([{fieldName: '«Заголовок объявления»', errorMessage: 'должно быть не менее 30 символов'}]);
       noticeForm.title.style.border = '2px solid red';
       noticeForm.title.addEventListener('focus', function (evt) {
         evt.preventDefault();
         noticeForm.title.style.border = '';
       });
     }
+
     if (checked) {
-      window.backend.save(onLoad, null, new FormData(noticeForm));
-      event.preventDefault();
+      window.backend.save(loadDataHandler, loadDataError, new FormData(noticeForm));
+      noticeForm.reset();
     }
   }, true);
+
 
 })();

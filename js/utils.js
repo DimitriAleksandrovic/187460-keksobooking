@@ -1,5 +1,7 @@
 'use strict';
 
+(function () {
+
 window.getRandomNumber = function (min, max) {
   return Math.round(Math.random() * (max - min) + min);
 };
@@ -89,4 +91,5 @@ window.ajax = function (settings) {
   xhr.send(options.data);
 };
 
+})();
 

@@ -11,6 +11,7 @@
 
   var activatePage = function () {
     noticeForm.classList.remove('notice__form--disabled');
+    noticeForm.style.position = 'relative';
     window.showcard.mapBlock.classList.remove('map--faded');
     formElements.forEach(function (item) {
       item.disabled = false;
