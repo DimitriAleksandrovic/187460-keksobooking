@@ -34,5 +34,5 @@
   window.data.get = function () {
     return offerData;
   };
-  
+
 })();

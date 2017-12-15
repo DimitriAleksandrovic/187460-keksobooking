@@ -123,7 +123,7 @@
       noticeForm.appendChild(errorBox);
     }
     errorBox.innerHTML = '';
-    
+
     if (Object.prototype.toString.call(message) === '[object Array]') {
       errorBox.appendChild(renderErrorText());
     } else {
