@@ -2,22 +2,23 @@
 
 (function () {
 
-  var mapPinsBlock = window.showcard.mapBlock.querySelector('.map__pins');
+  var mapPinsBlock = document.querySelector('.map__pins');
   var pinTemplate = document.querySelector('template').content.querySelector('.map__pin');
   var noticeForm = document.querySelector('.notice__form');
   var pinMain = mapPinsBlock.querySelector('.map__pin--main');
 
   var formElements = Array.from(noticeForm.querySelector('fieldset'));
 
-  function activatePage() {
+  var activatePage = function () {
     noticeForm.classList.remove('notice__form--disabled');
+    noticeForm.style.position = 'relative';
     window.showcard.mapBlock.classList.remove('map--faded');
     formElements.forEach(function (item) {
       item.disabled = false;
     });
-  }
+  };
 
-  function dragPinMain() {
+  var dragPinMain = function () {
     pinMain.addEventListener('mousedown', function (event) {
       event.preventDefault();
       var startCoords = {
@@ -25,7 +26,7 @@
         y: event.clientY
       };
 
-      function onMouseMove(moveEvt) {
+      var onMouseMove = function (moveEvt) {
         moveEvt.preventDefault();
         var shift = {
           x: startCoords.x - moveEvt.clientX,
@@ -53,10 +54,10 @@
           pinMain.style.top = limitCoords.bottom + 'px';
         }
         if ((pinMain.offsetLeft - shift.x) < limitCoords.left) {
-          pinMain.style.left = limitCoords.left + 'px';
+          pinMain.style.left = limitCoords.left - pinMain.offsetWidth / 2 + 'px';
         }
         if ((pinMain.offsetLeft - shift.x) > limitCoords.right) {
-          pinMain.style.left = limitCoords.right + 'px';
+          pinMain.style.left = limitCoords.right + pinMain.offsetWidth / 2 + 'px';
         }
 
         var finalCoords = {
@@ -65,26 +66,28 @@
         };
 
         noticeForm.address.value = 'x: ' + finalCoords.fx + ', y: ' + finalCoords.fy;
-      }
+      };
 
-      function onMouseUp(upEvt) {
+      var onMouseUp = function (upEvt) {
         upEvt.preventDefault();
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
-      }
+      };
 
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
 
     });
-  }
+  };
+
+  //  pinMain.parentElement.style.position = 'relative';
+  //  pinMain.style.position = 'absolute';
+  pinMain.style = 'z-index: 50;';
 
   window.map = {
     activatePage: activatePage,
-    mapPinsBlock: mapPinsBlock,
     pinTemplate: pinTemplate,
     noticeForm: noticeForm,
-    pinMain: pinMain,
     dragPinMain: dragPinMain
   };
 
