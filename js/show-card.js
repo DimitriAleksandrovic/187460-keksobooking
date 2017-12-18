@@ -10,9 +10,10 @@ var ESC_KEYCODE = 27;
   var currentAdvert = null;
 
   var showCard = function (event, data) {
-    event.preventDefault();
+    
     var target = event.target.closest('.map__pin');
     if (target && !target.classList.contains('map__pin--main')) {
+      event.preventDefault();
       var index = target.dataset.num;
       var advert = window.card.createAdvert(data[index]);
       filters.insertAdjacentElement('beforeBegin', advert);
@@ -40,8 +41,9 @@ var ESC_KEYCODE = 27;
   });
 
   mapBlock.addEventListener('click', function (event) {
-    event.preventDefault();
+    
     if (event.target.closest('.popup__close')) {
+      event.preventDefault();
       closePopUp(event);
     }
   });

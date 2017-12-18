@@ -72,16 +72,16 @@
         upEvt.preventDefault();
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
+        activatePage();
       };
 
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
 
     });
+    
   };
 
-  //  pinMain.parentElement.style.position = 'relative';
-  //  pinMain.style.position = 'absolute';
   pinMain.style = 'z-index: 50;';
 
   window.map = {

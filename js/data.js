@@ -4,7 +4,7 @@
 
   var mapBlock = document.querySelector('.map');
 
-  var offerData = null;
+  var offerData = [];
   var loadData = new Event('loadData', {bubbles: true, cancelable: true});
 
   mapBlock.style.overflow = 'visible';
@@ -29,8 +29,9 @@
 
   window.data = {
     onLoad: onload,
-    onError: onError
+    onError: onError,
   };
+
   window.data.get = function () {
     return offerData;
   };
