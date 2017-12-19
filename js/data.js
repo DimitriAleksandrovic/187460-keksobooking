@@ -28,12 +28,12 @@
   window.backend.load(onLoad, onError);
 
   window.data = {
-    onLoad: onload,
-    onError: onError,
-  };
-
-  window.data.get = function () {
-    return offerData;
+    get: function () {
+      return offerData;
+    },
+    set: function (data) {
+      offerData = data;
+    }
   };
 
 })();

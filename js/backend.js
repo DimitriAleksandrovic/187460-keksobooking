@@ -10,8 +10,9 @@
       sendError: onError, // функция обработки ошибок
       type: 'json', // тип получаемых данных
     };
-    window.ajax(settings);
+    window.utils.ajax(settings);
   }
+
   function save(onLoad, onError, data) {
     var settings = {
       method: 'POST', // метод запроса
@@ -21,10 +22,12 @@
       type: 'json', // тип получаемых данных
       data: data
     };
-    window.ajax(settings);
+    window.utils.ajax(settings);
   }
 
-  window.backend = {};
-  window.backend.load = load;
-  window.backend.save = save;
+  window.backend = {
+    load: load,
+    save: save
+  };
+
 })();

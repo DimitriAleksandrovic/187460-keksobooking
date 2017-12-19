@@ -9,13 +9,12 @@ var ESC_KEYCODE = 27;
   var activePin = null;
   var currentAdvert = null;
 
-  var showCard = function (event, data) {
-    
+  var showCard = function (event) {
     var target = event.target.closest('.map__pin');
     if (target && !target.classList.contains('map__pin--main')) {
       event.preventDefault();
       var index = target.dataset.num;
-      var advert = window.card.createAdvert(data[index]);
+      var advert = window.card.createAdvert(window.data.get()[index]); // !!!
       filters.insertAdjacentElement('beforeBegin', advert);
       target.classList.add('map__pin--active');
       if (activePin) {
@@ -37,18 +36,17 @@ var ESC_KEYCODE = 27;
 
   document.addEventListener('loadData', function (event) {
     event.preventDefault();
-    mapBlock.addEventListener('click', window.clickHandler(showCard, window.data.get()));
+    mapBlock.addEventListener('click', window.utils.clickHandler(showCard));
   });
 
   mapBlock.addEventListener('click', function (event) {
-    
     if (event.target.closest('.popup__close')) {
       event.preventDefault();
       closePopUp(event);
     }
   });
 
-  document.addEventListener('keydown', window.keyDownHandler(closePopUp, ESC_KEYCODE));
+  document.addEventListener('keydown', window.utils.keyDownHandler(closePopUp, ESC_KEYCODE));
 
   window.showcard = {
     mapBlock: mapBlock,

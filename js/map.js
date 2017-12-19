@@ -72,14 +72,12 @@
         upEvt.preventDefault();
         document.removeEventListener('mousemove', onMouseMove);
         document.removeEventListener('mouseup', onMouseUp);
-        activatePage();
       };
 
       document.addEventListener('mousemove', onMouseMove);
       document.addEventListener('mouseup', onMouseUp);
 
     });
-    
   };
 
   pinMain.style = 'z-index: 50;';
