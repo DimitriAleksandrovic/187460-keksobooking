@@ -2,7 +2,7 @@
 
 (function () {
 
-  function load(onLoad, onError) {
+  var load = function (onLoad, onError) {
     var settings = {
       method: 'GET', // метод запроса
       url: 'https://1510.dump.academy/keksobooking/data', // адрес запроса
@@ -13,7 +13,7 @@
     window.utils.ajax(settings);
   }
 
-  function save(onLoad, onError, data) {
+  var save = function (onLoad, onError, data) {
     var settings = {
       method: 'POST', // метод запроса
       url: 'https://1510.dump.academy/keksobooking', // адрес запроса

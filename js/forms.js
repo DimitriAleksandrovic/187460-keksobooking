@@ -2,6 +2,11 @@
 
 (function () {
 
+  var BUNGALO_MINPRICE = 0;
+  var FLAT_MINPRICE = 1000;
+  var HOUSE_MINPRICE = 5000;
+  var PALACE_MINPRICE = 10000;
+
   var noticeForm = document.querySelector('.notice__form');
   var formSubmitBlock = noticeForm.querySelector('.form__element--submit');
 
@@ -39,16 +44,16 @@
     var value = null;
     switch (field1.value) {
       case 'flat':
-        value = 1000;
+        value = FLAT_MINPRICE;
         break;
       case 'bungalo':
-        value = 0;
+        value = BUNGALO_MINPRICE;
         break;
       case 'house':
-        value = 5000;
+        value = HOUSE_MINPRICE;
         break;
       case 'palace':
-        value = 10000;
+        value = PALACE_MINPRICE;
         break;
     }
     field2.value = value;
@@ -56,17 +61,17 @@
 
   var limitPrice = function (field1, field2) {
     var value = field2.value;
-    if (value === 'flat' && field1.value < 1000) {
-      field1.value = 1000;
+    if (value === 'flat' && field1.value < FLAT_MINPRICE) {
+      field1.value = FLAT_MINPRICE;
     }
-    if (value === 'bungalo' && field1.value < 0) {
-      field1.value = 0;
+    if (value === 'bungalo' && field1.value < BUNGALO_MINPRICE) {
+      field1.value = BUNGALO_MINPRICE;
     }
-    if (value === 'house' && field1.value < 5000) {
-      field1.value = 5000;
+    if (value === 'house' && field1.value < HOUSE_MINPRICE) {
+      field1.value = HOUSE_MINPRICE;
     }
-    if (value === 'palace' && field1.value < 10000) {
-      field1.value = 10000;
+    if (value === 'palace' && field1.value < PALACE_MINPRICE) {
+      field1.value = PALACE_MINPRICE;
     }
   };
 
@@ -139,9 +144,18 @@
   noticeForm.addEventListener('submit', function (event) {
     event.preventDefault();
     var checked = true;
-    if (noticeForm.title.value.length < 30 || noticeForm.title.value.length > 100) {
+    if (noticeForm.title.value.length < 30) {
       checked = false;
       loadDataError([{fieldName: '«Заголовок объявления»', errorMessage: 'должно быть не менее 30 символов'}]);
+      noticeForm.title.style.border = '2px solid red';
+      noticeForm.title.addEventListener('focus', function (evt) {
+        evt.preventDefault();
+        noticeForm.title.style.border = '';
+      });
+    }
+    if (noticeForm.title.value.length > 100) {
+      checked = false;
+      loadDataError([{fieldName: '«Заголовок объявления»', errorMessage: 'должно быть не более 100 символов'}]);
       noticeForm.title.style.border = '2px solid red';
       noticeForm.title.addEventListener('focus', function (evt) {
         evt.preventDefault();
