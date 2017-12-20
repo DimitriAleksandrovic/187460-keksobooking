@@ -11,7 +11,7 @@
       type: 'json', // тип получаемых данных
     };
     window.utils.ajax(settings);
-  }
+  };
 
   var save = function (onLoad, onError, data) {
     var settings = {
@@ -23,7 +23,7 @@
       data: data
     };
     window.utils.ajax(settings);
-  }
+  };
 
   window.backend = {
     load: load,

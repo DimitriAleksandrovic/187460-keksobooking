@@ -47,7 +47,7 @@ var ESC_KEYCODE = 27;
   });
 
   document.addEventListener('keydown', window.utils.keyDownHandler(closePopUp, ESC_KEYCODE));
-  
+
   window.showcard = {
     mapBlock: mapBlock,
     showCard: showCard
